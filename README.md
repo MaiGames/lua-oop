@@ -12,19 +12,25 @@ local class = require 'lua-oop'
 local Animal = class('Animal') -- The argument 'Animal' is the class name 
 
 function Animal:constructor(legs)
+
   self.fields.legs = legs
+  
 end
 
-Animals.static.biped_legs = 2 -- class variable (also admits methods)
+Animal.static.biped_legs = 2 -- class variable (also admits methods)
 
 function Animal:isBiped()
+
   return self.fields.legs == Animal.biped_legs
+  
 end
 
 local Dog = class('Dog', Animal) -- inheritance
 
 function Dog:constructor()
+
   Animal.constructor(self, 4) -- calling the superclass constructor
+  
 end
 
 local dog = Dog:new()
