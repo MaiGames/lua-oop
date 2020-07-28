@@ -21,7 +21,7 @@ function Animal:isBiped()
   return self.fields.legs == Animal.biped_legs
 end
 
-local Dog = class('Lemon', Animal) -- inheritance
+local Dog = class('Dog', Animal) -- inheritance
 
 function Dog:constructor()
   Animal.constructor(self, 4) -- calling the superclass constructor
