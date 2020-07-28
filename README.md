@@ -4,7 +4,7 @@ A simple but powerful OOP library for Lua, fork of [kikito/middleclass](https://
 
 It features inheritance, metamethods (operators), class variables and weak mixin support.
 
-# Example
+## Simple Example
 
 ```lua
 local class = require 'lua-oop'
@@ -31,7 +31,7 @@ local dog = Dog:new()
 
 print(dog:isBiped()) -- false
 ```
-# Installation
+## Installation
 
 Simply copy the lua-oop.lua file anywhere (e.g. on a lib/ folder). Then write this in any Lua file where you want to use it:
 
@@ -39,7 +39,7 @@ Simply copy the lua-oop.lua file anywhere (e.g. on a lib/ folder). Then write th
 local class = require 'path/to/file/lua-oop'
 ```
 
-#License
+## License
 
 lua-oop is distributed under the MIT license.
 
