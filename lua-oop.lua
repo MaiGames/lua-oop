@@ -1,12 +1,10 @@
-local middleclass = {
-  _VERSION     = 'middleclass v4.1.1',
-  _DESCRIPTION = 'Object Orientation for Lua',
-  _URL         = 'https://github.com/kikito/middleclass',
+local oop = {
+  _VERSION     = 'lua-oop v1.0.0',
+  _DESCRIPTION = 'Object oriented programming for Lua. Fork of kikito/middleclass',
+  _URL         = 'https://github.com/MaiGames/lua-oop',
   _LICENSE     = [[
     MIT LICENSE
-
-    Copyright (c) 2011 Enrique García Cota
-
+    Copyright (c) 2011 Enrique García Cota & 2020 Sebastian Erives Mejia
     Permission is hereby granted, free of charge, to any person obtaining a
     copy of this software and associated documentation files (the
     "Software"), to deal in the Software without restriction, including
@@ -14,10 +12,8 @@ local middleclass = {
     distribute, sublicense, and/or sell copies of the Software, and to
     permit persons to whom the Software is furnished to do so, subject to
     the following conditions:
-
     The above copyright notice and this permission notice shall be included
     in all copies or substantial portions of the Software.
-
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
     OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
     MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -76,7 +72,7 @@ local function _createClass(name, super)
 
   local aClass = { name = name, super = super, static = {},
                    __instanceDict = dict, __declaredMethods = {},
-                   subclasses = setmetatable({}, {__mode='k'})  }
+                   subclasses = setmetatable({}, {__mode='k'}) }
 
   if super then
     setmetatable(aClass.static, {
@@ -116,7 +112,9 @@ end
 local DefaultMixin = {
   __tostring   = function(self) return "instance of " .. tostring(self.class) end,
 
-  initialize   = function(self, ...) end,
+  fields = { },
+
+  constructor   = function(self, ...) end,
 
   isInstanceOf = function(self, aClass)
     return type(aClass) == 'table'
@@ -136,7 +134,7 @@ local DefaultMixin = {
     new = function(self, ...)
       assert(type(self) == 'table', "Make sure that you are using 'Class:new' instead of 'Class.new'")
       local instance = self:allocate()
-      instance:initialize(...)
+      instance:constructor(...)
       return instance
     end,
 
@@ -149,7 +147,7 @@ local DefaultMixin = {
       for methodName, f in pairs(self.__instanceDict) do
         _propagateInstanceMethod(subclass, methodName, f)
       end
-      subclass.initialize = function(instance, ...) return self.initialize(instance, ...) end
+      subclass.constructor = function(instance, ...) return self.constructor(instance, ...) end
 
       self.subclasses[subclass] = true
       self:subclassed(subclass)
@@ -170,14 +168,15 @@ local DefaultMixin = {
       for _,mixin in ipairs({...}) do _includeMixin(self, mixin) end
       return self
     end
+
   }
 }
 
-function middleclass.class(name, super)
+function oop.class(name, super)
   assert(type(name) == 'string', "A name (string) is needed for the new class")
   return super and super:subclass(name) or _includeMixin(_createClass(name), DefaultMixin)
 end
 
-setmetatable(middleclass, { __call = function(_, ...) return middleclass.class(...) end })
+setmetatable(oop, { __call = function(_, ...) return oop.class(...) end })
 
-return middleclass
+return oop
