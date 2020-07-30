@@ -112,7 +112,7 @@ end
 local DefaultMixin = {
   __tostring   = function(self) return "instance of " .. tostring(self.class) end,
 
-  fields = { },
+  v = { },
 
   constructor   = function(self, ...) end,
 
